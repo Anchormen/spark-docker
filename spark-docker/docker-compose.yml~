@@ -1,0 +1,23 @@
+version: '2' 
+
+#NETWORKING#################################################################
+# By default Compose will set up a private network for the cluster #########
+# Each container will join the network and can be reached by other #########
+# Containers at a host-name identical to the containres name       #########
+# It's necessary to keep the master container_name as 'master'     #########
+############################################################################
+ 
+services:
+  master:
+    build: .
+    image: anchormen/spark-1.6.1
+    container_name: master
+    ports:
+      - "8080:8080"
+    command: ["/usr/bin/supervisord", "--configuration=/opt/conf/master.conf"]
+#---------------------------------------
+  slave:
+    image: anchormen/spark-1.6.1
+    depends_on:
+      - master
+    command: ["/usr/bin/supervisord", "--configuration=/opt/conf/slave.conf"]

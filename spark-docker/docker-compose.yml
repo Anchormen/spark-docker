@@ -3,10 +3,13 @@ version: '2'
 #NETWORKING#################################################################
 # By default Compose will set up a private network for the cluster #########
 # Each container will join the network and can be reached by other #########
-# containers at a host-name identical to the containres name       #########
+# containers at a host-name identical to the containres name.      #########
 # It's necessary to keep the master container_name as 'master'     #########
+# COMPOSE_PROJECT_NAME that is defined on .env file will also      #########
+# detrmine the name of the network that spark nodes are running on.#########
+# If that variable is not defined the network name will be         #########
+# `{dir-name}_default`                                             #########
 ############################################################################
- 
 services:
   master:
     build: .
@@ -14,6 +17,9 @@ services:
     container_name: master
     ports:
       - "8080:8080"
+      - "7077:7077" 
+      - "8888:8888" 
+      - "8081:8081"
     command: ["/usr/bin/supervisord", "--configuration=/opt/conf/master.conf"]
 #---------------------------------------
   slave:

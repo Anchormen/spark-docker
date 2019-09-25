@@ -17,3 +17,8 @@ This package enables creating a Standalone Zeppelin on docker that connects to t
 4. Check Zeppelin on `localhost:8090`
 5. Run something on spark and check spark ui (`localhost:8080`) to see if Zeppelin task is running on cluster  
 4. To destroy the cluster ```docker-compose down```
+
+## Running Zeppelin using Docker
+1. Build the image ```docker build -t zeppelin-spark:local .```
+2. Start up Zeppeling with ```docker run -p 8080:8080 zeppelin-spark:local```
+3. Visit `localhost:8080` in your web browser.
